@@ -2,19 +2,31 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import medicalBanner from "../../../assets/online-medical-assistance-illustration.png";
 import { auth } from "../../../auth/firebase-config";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Registrationschema } from "./validation";
 
 export type FormFields = {
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
 export function SignUpForm() {
-  const { register, handleSubmit } = useForm<FormFields>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>({
+    resolver: yupResolver(Registrationschema),
+  });
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    try {
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   return (
     <>
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
@@ -40,6 +52,9 @@ export function SignUpForm() {
                   placeholder="admin@example.com"
                   {...register("email")}
                 />
+                {errors.email && (
+                  <div className="text-red-500">{errors.email.message}</div>
+                )}
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -50,8 +65,14 @@ export function SignUpForm() {
                   type="password"
                   {...register("password")}
                 />
+                {errors.password && (
+                  <div className="text-red-500">{errors.password.message}</div>
+                )}
               </div>
-              <button className="p-2 bg-custom-viollet text-custom-white  rounded-2xl">
+              <button
+                className="p-2 bg-custom-viollet text-custom-white  rounded-2xl"
+                type="submit"
+              >
                 Create an account
               </button>
             </div>

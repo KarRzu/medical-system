@@ -1,15 +1,27 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import medicalBanner from "../../../assets/online-medical-assistance-illustration.png";
-import { useState } from "react";
 import { auth } from "../../../auth/firebase-config";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { LoginSchema } from "../sign-up/validation";
+
+export type FormFields = {
+  email: string;
+  password: string;
+};
 
 export function SignInForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>({
+    resolver: yupResolver(LoginSchema),
+  });
 
-  const signIn = async () => {
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
     } catch (error) {
       console.log(error);
     }
@@ -19,7 +31,10 @@ export function SignInForm() {
     <>
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
         <div className="flex items-center justify-center py-12">
-          <div className="mx-auto grid w-[350px] gap-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mx-auto grid w-[350px] gap-6"
+          >
             <div className="grid gap-2 text-center">
               <h1 className="text-3xl font-bold">Sign In</h1>
               <p className="text-balance text-muted-foreground">
@@ -35,8 +50,11 @@ export function SignInForm() {
                   className="border-2 rounded-lg w-96 p-2"
                   type="email"
                   placeholder="admin@example.com"
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <div className="text-red-500">{errors.email.message}</div>
+                )}
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -45,13 +63,13 @@ export function SignInForm() {
                 <input
                   className="border-2 rounded-lg w-96 p-2"
                   type="password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password")}
                 />
+                {errors.password && (
+                  <div className="text-red-500">{errors.password.message}</div>
+                )}
               </div>
-              <button
-                onClick={signIn}
-                className="p-2 bg-custom-viollet text-custom-white  rounded-2xl"
-              >
+              <button className="p-2 bg-custom-viollet text-custom-white  rounded-2xl">
                 Login
               </button>
             </div>
@@ -61,7 +79,7 @@ export function SignInForm() {
                 Sign Up
               </p>
             </div>
-          </div>
+          </form>
         </div>
         <div className="hidden bg-muted lg:block">
           <img src={medicalBanner} alt="image" />
