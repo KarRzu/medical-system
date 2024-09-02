@@ -4,6 +4,7 @@ import { auth } from "../../../auth/firebase-config";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Registrationschema } from "./validation";
+import { Link } from "react-router-dom";
 
 export type FormFields = {
   email: string;
@@ -29,7 +30,7 @@ export function SignUpForm() {
   };
   return (
     <>
-      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
+      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[530px]">
         <div className="flex items-center justify-center py-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -78,13 +79,7 @@ export function SignUpForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               <p>
-                Already have an account?{" "}
-                <a
-                  href="../sign-in/SignInForm.tsx"
-                  className="text-custom-viollet"
-                >
-                  Sign In
-                </a>
+                Already have an account? <Link to="/sign-in">Sign In</Link>
               </p>
             </div>
           </form>
