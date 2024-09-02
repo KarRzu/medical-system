@@ -8,7 +8,7 @@ import { Button } from "../../shared/button/Button";
 import { useAuth } from "../../../auth/AuthProvider";
 import { Input } from "../../shared/input/Input";
 import { ROUTES } from "../../../router/routes";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export type FormFields = {
@@ -29,16 +29,16 @@ export function SignInForm() {
   const onSubmit: SubmitHandler<FormFields> = async ({ email, password }) => {
     try {
       await login(email, password);
-      toast.success("Login successful!");
+      // toast.success("Login successful!");
     } catch (error) {
-      toast.error("Login failed");
+      // toast.error("Login failed");
       console.log(error);
     }
   };
 
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
         <div className="flex items-center justify-center py-12">
           <form
