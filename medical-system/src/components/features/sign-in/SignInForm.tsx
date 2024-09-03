@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginSchema } from "../sign-up/validation";
 import { Link } from "react-router-dom";
 import { Errors } from "../../shared/Errors";
+import { Button } from "../../shared/button/Button";
 
 export type FormFields = {
   email: string;
@@ -68,9 +69,7 @@ export function SignInForm() {
 
                 <Errors message={errors.password?.message} />
               </div>
-              <button className="p-2 bg-custom-viollet text-custom-white  rounded-2xl">
-                Login
-              </button>
+              <Button>Login</Button>
             </div>
             <div className="mt-4 text-center text-sm">
               <p>
