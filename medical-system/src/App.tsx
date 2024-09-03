@@ -11,6 +11,7 @@ import { LaboratoristPage } from "./pages/LaboratoristPage";
 import { CalendarPage } from "./pages/CalendarPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -19,7 +20,6 @@ function App() {
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
         <Route element={<Layout />}>
-          {" "}
           {/* Layout jako kontener */}
           <Route index element={<DashboardPage />} />
           <Route path={ROUTES.patients} element={<PatientsPage />} />
@@ -29,6 +29,7 @@ function App() {
           <Route path={ROUTES.profile} element={<ProfilePage />} />
           <Route path={ROUTES.settings} element={<SettingsPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
