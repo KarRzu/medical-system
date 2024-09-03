@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Registrationschema } from "./validation";
 import { Link } from "react-router-dom";
+import { Errors } from "../../shared/Errors";
 
 export type FormFields = {
   email: string;
@@ -53,9 +54,7 @@ export function SignUpForm() {
                   placeholder="admin@example.com"
                   {...register("email")}
                 />
-                {errors.email && (
-                  <div className="text-red-500">{errors.email.message}</div>
-                )}
+                <Errors message={errors.email?.message} />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -66,9 +65,7 @@ export function SignUpForm() {
                   type="password"
                   {...register("password")}
                 />
-                {errors.password && (
-                  <div className="text-red-500">{errors.password.message}</div>
-                )}
+                <Errors message={errors.password?.message} />
               </div>
               <button
                 className="p-2 bg-custom-viollet text-custom-white  rounded-2xl"

@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginSchema } from "../sign-up/validation";
 import { Link } from "react-router-dom";
-import { SignUpForm } from "../sign-up/SignUpForm";
+import { Errors } from "../../shared/Errors";
 
 export type FormFields = {
   email: string;
@@ -54,9 +54,7 @@ export function SignInForm() {
                   placeholder="admin@example.com"
                   {...register("email")}
                 />
-                {errors.email && (
-                  <div className="text-red-500">{errors.email.message}</div>
-                )}
+                <Errors message={errors.email?.message} />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -67,9 +65,8 @@ export function SignInForm() {
                   type="password"
                   {...register("password")}
                 />
-                {errors.password && (
-                  <div className="text-red-500">{errors.password.message}</div>
-                )}
+
+                <Errors message={errors.password?.message} />
               </div>
               <button className="p-2 bg-custom-viollet text-custom-white  rounded-2xl">
                 Login
