@@ -68,7 +68,7 @@ export function SignUpForm() {
                 />
                 <Errors message={errors.password?.message} />
               </div>
-              <Button>Create an account</Button>
+              <Button type="submit">Create an account</Button>
             </div>
             <div className="mt-4 text-center text-sm">
               <p>

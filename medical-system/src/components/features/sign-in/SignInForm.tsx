@@ -69,7 +69,7 @@ export function SignInForm() {
 
                 <Errors message={errors.password?.message} />
               </div>
-              <Button>Login</Button>
+              <Button type="submit">Login</Button>
             </div>
             <div className="mt-4 text-center text-sm">
               <p>
