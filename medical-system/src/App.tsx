@@ -6,12 +6,10 @@ import { SignUpForm } from "./components/features/sign-up/SignUpForm";
 function App() {
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/signup" element={<SignUpForm />} />
-          <Route path="/signin" element={<SignInForm />} />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/signin" element={<SignInForm />} />
+      </Routes>
     </>
   );
 }

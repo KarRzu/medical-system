@@ -4,6 +4,8 @@ import { auth } from "../../../auth/firebase-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginSchema } from "../sign-up/validation";
+import { Link } from "react-router-dom";
+import { SignUpForm } from "../sign-up/SignUpForm";
 
 export type FormFields = {
   email: string;
@@ -19,9 +21,9 @@ export function SignInForm() {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  const onSubmit: SubmitHandler<FormFields> = async ({ email, password }) => {
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       console.log(error);
     }
@@ -75,8 +77,7 @@ export function SignInForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               <p>
-                Don't have an account? {/* <Link to={SignUpForm}></Link> */}
-                Sign Up
+                Don't have an account? <Link to="/signup">Sign Up</Link>
               </p>
             </div>
           </form>
