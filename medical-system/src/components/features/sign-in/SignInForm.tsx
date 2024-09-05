@@ -1,12 +1,11 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import medicalBanner from "../../../assets/online-medical-assistance-illustration.png";
-import { auth } from "../../../auth/firebase-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginSchema } from "../sign-up/validation";
 import { Link } from "react-router-dom";
 import { Errors } from "../../shared/Errors";
 import { Button } from "../../shared/button/Button";
+import { useAuth } from "../../../auth/AuthProvider";
 
 export type FormFields = {
   email: string;
@@ -14,6 +13,7 @@ export type FormFields = {
 };
 
 export function SignInForm() {
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -24,7 +24,7 @@ export function SignInForm() {
 
   const onSubmit: SubmitHandler<FormFields> = async ({ email, password }) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await login(email, password);
     } catch (error) {
       console.log(error);
     }
