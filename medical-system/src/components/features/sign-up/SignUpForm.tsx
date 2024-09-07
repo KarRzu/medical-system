@@ -1,7 +1,7 @@
 import medicalBanner from "../../../assets/online-medical-assistance-illustration.png";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Registrationschema } from "./validation";
+import { RegistrationSchema } from "./validation";
 import { Link } from "react-router-dom";
 import { Errors } from "../../shared/Errors";
 import { Button } from "../../shared/button/Button";
@@ -20,7 +20,7 @@ export function SignUpForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormFields>({
-    resolver: yupResolver(Registrationschema),
+    resolver: yupResolver(RegistrationSchema),
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {

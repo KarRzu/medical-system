@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Errors } from "../../shared/Errors";
 import { Button } from "../../shared/button/Button";
 import { useAuth } from "../../../auth/AuthProvider";
+import { toast } from "react-toastify";
 
 export type FormFields = {
   email: string;
@@ -25,8 +26,9 @@ export function SignInForm() {
   const onSubmit: SubmitHandler<FormFields> = async ({ email, password }) => {
     try {
       await login(email, password);
+      toast.success("Successfully logged in!");
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to log in.");
     }
   };
 
