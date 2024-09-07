@@ -1,8 +1,30 @@
+import { useState } from "react";
+
 export type ModalProps = {
   closeModal: () => void;
 };
 
 export function Modal({ closeModal }: ModalProps) {
+  const [formState, setFormState] = useState({
+    firstName: "",
+    lastName: "",
+    age: "",
+    dateBirth: "",
+    mobile: "",
+    email: "",
+    address: "",
+    city: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormState();
+  };
+
   return (
     <>
       <div className="fixed flex justify-center items-center w-full h-screen top-0 left-0 bg-[rgba(0,0,0,0.4)]">
@@ -21,6 +43,7 @@ export function Modal({ closeModal }: ModalProps) {
                 type="text"
                 id="firstName"
                 className="border w-full p-2 rounded-md"
+                value={formState.firstName}
               />
             </div>
 
@@ -30,6 +53,7 @@ export function Modal({ closeModal }: ModalProps) {
                 type="text"
                 id="lastName"
                 className="border w-full p-2 rounded-md"
+                value={formState.lastName}
               />
             </div>
 
@@ -39,6 +63,7 @@ export function Modal({ closeModal }: ModalProps) {
                 type="number"
                 id="age"
                 className="border w-full p-2 rounded-md"
+                value={formState.age}
               />
             </div>
 
@@ -48,6 +73,7 @@ export function Modal({ closeModal }: ModalProps) {
                 type="text"
                 id="birthDate"
                 className="border w-full p-2 rounded-md"
+                value={formState.dateBirth}
               />
             </div>
 
@@ -57,6 +83,7 @@ export function Modal({ closeModal }: ModalProps) {
                 type="tel"
                 id="mobile"
                 className="border w-full p-2 rounded-md"
+                value={formState.mobile}
               />
             </div>
 
@@ -66,6 +93,7 @@ export function Modal({ closeModal }: ModalProps) {
                 type="email"
                 id="email"
                 className="border w-full p-2 rounded-md"
+                value={formState.email}
               />
             </div>
 
@@ -75,6 +103,7 @@ export function Modal({ closeModal }: ModalProps) {
                 type="text"
                 id="address"
                 className="border w-full p-2 rounded-md"
+                value={formState.address}
               />
             </div>
 
@@ -84,10 +113,11 @@ export function Modal({ closeModal }: ModalProps) {
                 type="text"
                 id="city"
                 className="border w-full p-2 rounded-md"
+                value={formState.city}
               />
             </div>
 
-            <button>Save</button>
+            <button onClick={handleSubmit}>Save</button>
           </form>
         </div>
       </div>
