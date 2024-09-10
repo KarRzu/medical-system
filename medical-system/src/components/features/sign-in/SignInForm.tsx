@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Errors } from "../../shared/Errors";
 import { Button } from "../../shared/button/Button";
 import { useAuth } from "../../../auth/AuthProvider";
-import { toast } from "react-toastify";
+import { Input } from "../../shared/input/Input";
 
 export type FormFields = {
   email: string;
@@ -26,9 +26,8 @@ export function SignInForm() {
   const onSubmit: SubmitHandler<FormFields> = async ({ email, password }) => {
     try {
       await login(email, password);
-      toast.success("Successfully logged in!");
     } catch (error) {
-      toast.error("Failed to log in.");
+      console.log(error);
     }
   };
 
@@ -51,12 +50,7 @@ export function SignInForm() {
                 <div className="flex items-center">
                   <label htmlFor="email">Email</label>
                 </div>
-                <input
-                  className="border-2 rounded-lg w-96 p-2"
-                  type="email"
-                  placeholder="admin@example.com"
-                  {...register("email")}
-                />
+                <Input type="email" required {...register("email")} />
                 <Errors message={errors.email?.message} />
               </div>
               <div className="grid gap-2">
