@@ -7,6 +7,9 @@ import { Errors } from "../../shared/Errors";
 import { Button } from "../../shared/button/Button";
 import { useAuth } from "../../../auth/AuthProvider";
 import { Input } from "../../shared/input/Input";
+import { ROUTES } from "../../../router/routes";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export type FormFields = {
   email: string;
@@ -26,13 +29,16 @@ export function SignInForm() {
   const onSubmit: SubmitHandler<FormFields> = async ({ email, password }) => {
     try {
       await login(email, password);
+      toast.success("Login successful!");
     } catch (error) {
+      toast.error("Login failed");
       console.log(error);
     }
   };
 
   return (
     <>
+      <ToastContainer />
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
         <div className="flex items-center justify-center py-12">
           <form
@@ -57,19 +63,14 @@ export function SignInForm() {
                 <div className="flex items-center">
                   <label htmlFor="password">Password</label>
                 </div>
-                <input
-                  className="border-2 rounded-lg w-96 p-2"
-                  type="password"
-                  {...register("password")}
-                />
-
+                <Input type="password" required {...register("password")} />
                 <Errors message={errors.password?.message} />
               </div>
               <Button type="submit">Login</Button>
             </div>
             <div className="mt-4 text-center text-sm">
               <p>
-                Don't have an account? <Link to="/signup">Sign Up</Link>
+                Don't have an account? <Link to={ROUTES.signUp}>Sign Up</Link>
               </p>
             </div>
           </form>
