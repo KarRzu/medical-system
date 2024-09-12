@@ -12,12 +12,12 @@ export type Row = {
   edit: ReactNode;
 };
 
-export type TableProps = {
-  rows: Row[];
-  deleteRow: (targetIndex: number) => void;
-};
+// export type TableProps = {
+//   rows: Row[];
+//   deleteRow: (targetIndex: number) => void;
+// };
 
-export function Table({ rows, deleteRow }: TableProps) {
+export function Table() {
   return (
     <>
       <div>
