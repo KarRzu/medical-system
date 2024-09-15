@@ -9,19 +9,19 @@ import { db } from "../auth/firebase-config";
 export function PatientsPage() {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [patients, setPatients] = useState([]);
+  // const [patients, setPatients] = useState([]);
 
-  const ptientsCollectionRef = collection(db, "patients");
+  // const ptientsCollectionRef = collection(db, "patients");
 
   useEffect(() => {
     const getPatientsList = async () => {
       try {
-        const data = await getDocs(ptientsCollectionRef);
-        const filteredData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setPatients(filteredData);
+        // const data = await getDocs(ptientsCollectionRef);
+        // const filteredData = data.docs.map((doc) => ({
+        //   ...doc.data(),
+        //   id: doc.id,
+        // }));
+        // setPatients(filteredData);
       } catch (error) {
         console.log(error);
       }

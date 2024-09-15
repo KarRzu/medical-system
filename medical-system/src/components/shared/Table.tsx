@@ -20,7 +20,7 @@ export type Row = {
 export function Table() {
   return (
     <>
-      <div>
+      {/* <div>
         <table className="w-full border-collapse border border-slate-400">
           <thead className="bg-custom-black text-white">
             <tr>
@@ -60,7 +60,7 @@ export function Table() {
             })}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </>
   );
 }
