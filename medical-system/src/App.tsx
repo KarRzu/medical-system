@@ -13,17 +13,20 @@ import { CalendarPage } from "./pages/CalendarPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { Provider } from "react-redux";
+import { store } from "./state/store";
 
 function App() {
   return (
     <>
+      {/* <Provider store={store}> */}
       <AuthProvider>
         <BrowserRouter>
           <Routes>
             <Route path={ROUTES.signIn} element={<SignInForm />} />
             <Route path={ROUTES.signUp} element={<SignUpForm />} />
             <Route element={<Layout />}>
-              {/* Layout jako kontener */}
+              Layout jako kontener
               <Route index element={<DashboardPage />} />
               <Route path={ROUTES.patients} element={<PatientsPage />} />
               <Route path={ROUTES.doctors} element={<DoctorsPage />} />
@@ -39,6 +42,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
+      {/* </Provider> */}
     </>
   );
 }
