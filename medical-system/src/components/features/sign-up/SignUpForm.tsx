@@ -1,6 +1,7 @@
 import medicalBanner from "../../../assets/online-medical-assistance-illustration.png";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+<<<<<<< HEAD
 import { RegistrationSchema } from "./validation";
 import { Link } from "react-router-dom";
 import { Errors } from "../../shared/Errors";
@@ -10,6 +11,10 @@ import { Input } from "../../shared/input/Input";
 import { ROUTES } from "../../../router/routes";
 // import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+=======
+import { Registrationschema } from "./validation";
+import { Link } from "react-router-dom";
+>>>>>>> 08656e948bfa83d1e4c9e9a5c9e2bf2719d319df
 
 export type FormFields = {
   email: string;
@@ -38,8 +43,12 @@ export function SignUpForm() {
   };
   return (
     <>
+<<<<<<< HEAD
       {/* <ToastContainer /> */}
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
+=======
+      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[530px]">
+>>>>>>> 08656e948bfa83d1e4c9e9a5c9e2bf2719d319df
         <div className="flex items-center justify-center py-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -78,7 +87,11 @@ export function SignUpForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               <p>
+<<<<<<< HEAD
                 Already have an account? <Link to={ROUTES.signIn}>Sign In</Link>
+=======
+                Already have an account? <Link to="/sign-in">Sign In</Link>
+>>>>>>> 08656e948bfa83d1e4c9e9a5c9e2bf2719d319df
               </p>
             </div>
           </form>

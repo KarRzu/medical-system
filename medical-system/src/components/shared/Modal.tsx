@@ -62,6 +62,7 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
             </button>
           </div>
 
+
           <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="firstName">First Name</label>
@@ -70,6 +71,7 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
                 id="firstName"
                 className="border w-full p-2 rounded-md"
                 value={formState.firstName}
+
                 onChange={handleInputChange}
               />
             </div>
@@ -86,6 +88,7 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
             </div>
 
             <div>
+
               <label htmlFor="idNumber">ID number</label>
               <input
                 type="text"
