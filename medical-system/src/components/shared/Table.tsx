@@ -1,24 +1,17 @@
 import { ReactNode, useEffect, useState } from "react";
 import {
-  Column,
-  ColumnDef,
-  ColumnFiltersState,
-  RowData,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { collection, getDocs, Timestamp } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../auth/firebase-config";
 
 export type User = {
   name: string;
-  age: number;
+  email: string;
   mobile: string;
-  city: string;
+  address: string;
   dateBirth: string;
   delete?: ReactNode;
   edit?: ReactNode;
@@ -30,16 +23,16 @@ const columns = [
     accessorKey: "name",
   },
   {
-    header: "Age",
-    accessorKey: "age",
+    header: "Email",
+    accessorKey: "email",
   },
   {
     header: "Mobile",
     accessorKey: "mobile",
   },
   {
-    header: "City",
-    accessorKey: "city",
+    header: "Address",
+    accessorKey: "address",
   },
   {
     header: "Date Birth",
@@ -47,7 +40,7 @@ const columns = [
   },
 ];
 
-export function Table() {
+export function Table({ addPatient }: { addPatient: User | null }) {
   const [data, setData] = useState<User[]>([]);
 
   useEffect(() => {
@@ -60,9 +53,9 @@ export function Table() {
         console.log(docData);
         return {
           name: docData.name || "",
-          age: docData.age || 0,
+          email: docData.email,
           mobile: docData.mobile || "",
-          city: docData.city || "",
+          address: docData.address || "",
           dateBirth: docData.dateBirth,
         } as User;
       });
@@ -71,6 +64,12 @@ export function Table() {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (addPatient) {
+      setData((prevData) => [...prevData, addPatient]);
+    }
   }, []);
 
   const table = useReactTable({
@@ -97,6 +96,7 @@ export function Table() {
                     )}
                   </th>
                 ))}
+                <th className="text-center font-bold">Actions</th>
               </tr>
             )
           )}
@@ -109,6 +109,15 @@ export function Table() {
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
+
+                <td className="border border-slate-200 p-2 flex justify-center items-center gap-4">
+                  <button className="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition duration-300">
+                    Delete
+                  </button>
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+                    Edit
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
