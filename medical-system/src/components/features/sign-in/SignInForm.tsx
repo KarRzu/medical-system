@@ -3,16 +3,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginSchema } from "../sign-up/validation";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import { Errors } from "../../shared/Errors";
 import { Button } from "../../shared/button/Button";
 import { useAuth } from "../../../auth/AuthProvider";
 import { Input } from "../../shared/input/Input";
 import { ROUTES } from "../../../router/routes";
-// import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-=======
->>>>>>> 08656e948bfa83d1e4c9e9a5c9e2bf2719d319df
+
 
 export type FormFields = {
   email: string;
@@ -32,21 +30,18 @@ export function SignInForm() {
   const onSubmit: SubmitHandler<FormFields> = async ({ email, password }) => {
     try {
       await login(email, password);
-      // toast.success("Login successful!");
+      toast.success("Login successful!");
     } catch (error) {
-      // toast.error("Login failed");
+      toast.error("Login failed");
       console.log(error);
     }
   };
 
   return (
     <>
-<<<<<<< HEAD
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
-=======
-      <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[530px]">
->>>>>>> 08656e948bfa83d1e4c9e9a5c9e2bf2719d319df
+
         <div className="flex items-center justify-center py-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -77,11 +72,8 @@ export function SignInForm() {
             </div>
             <div className="mt-4 text-center text-sm">
               <p>
-<<<<<<< HEAD
                 Don't have an account? <Link to={ROUTES.signUp}>Sign Up</Link>
-=======
-                Don't have an account? <Link to="/sign-up">Sign Up</Link>
->>>>>>> 08656e948bfa83d1e4c9e9a5c9e2bf2719d319df
+
               </p>
             </div>
           </form>
