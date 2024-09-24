@@ -1,54 +1,49 @@
 import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
 import { db } from "../../auth/firebase-config";
 import { User } from "./Table";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Errors } from "./Errors";
 
 export type ModalProps = {
   closeModal: () => void;
   addPatient: (newPatient: User) => void;
 };
 
+export type InputFields = {
+  firstName: string;
+  lastName: string;
+  idNumber: string;
+  dateBirth: string;
+  mobile: string;
+  email: string;
+  address: string;
+};
+
 export function Modal({ closeModal, addPatient }: ModalProps) {
-  const [formState, setFormState] = useState({
-    firstName: "",
-    lastName: "",
-    idNumber: "",
-    dateBirth: "",
-    mobile: "",
-    email: "",
-    address: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InputFields>({
+    // resolver: yupResolver(RegistrationSchema),
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit: SubmitHandler<InputFields> = async (data) => {
     const newPatient: User = {
-      name: `${formState.firstName} ${formState.lastName}`,
-      email: formState.email,
-      mobile: formState.mobile,
-      address: formState.address,
-      dateBirth: formState.dateBirth,
+      name: `${data.firstName} ${data.lastName}`,
+      ...data,
     };
 
-    console.log("New patient data", newPatient);
+    try {
+      const patientsCollectionRef = collection(db, "patients");
+      await addDoc(patientsCollectionRef, newPatient);
 
-    // Dodaj pacjenta do Firestore
-    const patientsCollectionRef = collection(db, "patients");
-    await addDoc(patientsCollectionRef, newPatient);
-
-    // Dodaj pacjenta do tabeli
-    addPatient(newPatient);
-
-    // Zamknij modal
-    closeModal();
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormState((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
+      addPatient(newPatient);
+      console.log(newPatient);
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -62,85 +57,78 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
             </button>
           </div>
 
-
-          <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
+          <form
+            className="grid grid-cols-2 gap-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div>
               <label htmlFor="firstName">First Name</label>
               <input
-                type="text"
-                id="firstName"
+                {...register("firstName")}
+                placeholder="First Name"
                 className="border w-full p-2 rounded-md"
-                value={formState.firstName}
-
-                onChange={handleInputChange}
               />
+              <Errors message={errors.firstName?.message} />
             </div>
 
             <div>
               <label htmlFor="lastName">Last Name</label>
               <input
-                type="text"
-                id="lastName"
+                {...register("lastName")}
+                placeholder="Last Name"
                 className="border w-full p-2 rounded-md"
-                value={formState.lastName}
-                onChange={handleInputChange}
               />
+              <Errors message={errors.lastName?.message} />
             </div>
 
             <div>
-
               <label htmlFor="idNumber">ID number</label>
               <input
-                type="text"
-                id="idNumber"
+                {...register("idNumber")}
+                placeholder="ID number"
                 className="border w-full p-2 rounded-md"
-                value={formState.idNumber}
-                onChange={handleInputChange}
               />
+              <Errors message={errors.idNumber?.message} />
             </div>
 
             <div>
               <label htmlFor="dateBirth">Birth Date</label>
               <input
-                type="text"
-                id="dateBirth"
+                {...register("dateBirth")}
+                placeholder="Date Birth"
                 className="border w-full p-2 rounded-md"
-                value={formState.dateBirth}
-                onChange={handleInputChange}
               />
+              <Errors message={errors.dateBirth?.message} />
             </div>
 
             <div>
               <label htmlFor="mobile">Mobile</label>
               <input
-                type="tel"
-                id="mobile"
+                {...register("mobile")}
+                placeholder="Mobile"
                 className="border w-full p-2 rounded-md"
-                value={formState.mobile}
-                onChange={handleInputChange}
               />
+              <Errors message={errors.mobile?.message} />
             </div>
 
             <div>
               <label htmlFor="email">Email</label>
               <input
-                type="email"
-                id="email"
+                {...register("email")}
+                placeholder="Email"
                 className="border w-full p-2 rounded-md"
-                value={formState.email}
-                onChange={handleInputChange}
               />
+              <Errors message={errors.email?.message} />
             </div>
 
             <div>
               <label htmlFor="address">Address</label>
               <input
-                type="text"
-                id="address"
+                {...register("address")}
+                placeholder="Address"
                 className="border w-full p-2 rounded-md"
-                value={formState.address}
-                onChange={handleInputChange}
               />
+              <Errors message={errors.address?.message} />
             </div>
 
             <button

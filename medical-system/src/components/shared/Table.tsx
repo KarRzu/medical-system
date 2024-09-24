@@ -66,12 +66,6 @@ export function Table({ addPatient }: { addPatient: User | null }) {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (addPatient) {
-      setData((prevData) => [...prevData, addPatient]);
-    }
-  }, []);
-
   const table = useReactTable({
     data,
     columns,
