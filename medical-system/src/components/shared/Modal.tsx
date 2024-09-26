@@ -39,7 +39,6 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
       await addDoc(patientsCollectionRef, newPatient);
 
       addPatient(newPatient);
-      console.log(newPatient);
       closeModal();
     } catch (error) {
       console.log(error);

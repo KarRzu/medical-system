@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -6,6 +6,8 @@ import {
 } from "@tanstack/react-table";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../auth/firebase-config";
+import { useColumns } from "../../auth/hooks/useColumns";
+import useSWR from "swr";
 
 export type User = {
   name: string;
@@ -14,57 +16,35 @@ export type User = {
   address: string;
   dateBirth: string;
   delete?: ReactNode;
-  edit?: ReactNode;
 };
 
-const columns = [
-  {
-    header: "Name",
-    accessorKey: "name",
-  },
-  {
-    header: "Email",
-    accessorKey: "email",
-  },
-  {
-    header: "Mobile",
-    accessorKey: "mobile",
-  },
-  {
-    header: "Address",
-    accessorKey: "address",
-  },
-  {
-    header: "Date Birth",
-    accessorKey: "dateBirth",
-  },
-];
+export type TableProps = {
+  addPatient: (newPatient: User) => void;
+};
 
-export function Table({ addPatient }: { addPatient: User | null }) {
-  const [data, setData] = useState<User[]>([]);
+export const fetchPatients = async () => {
+  const patientsCollectionRef = collection(db, "patients");
+  const users = await getDocs(patientsCollectionRef);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const patientsCollectionRef = collection(db, "patients");
-      const users = await getDocs(patientsCollectionRef);
+  return users.docs.map((doc) => {
+    const docData = doc.data();
+    return {
+      name: docData.name || "",
+      email: docData.email,
+      mobile: docData.mobile || "",
+      address: docData.address || "",
+      dateBirth: docData.dateBirth,
+    } as User;
+  });
+};
 
-      const usersList = users.docs.map((doc) => {
-        const docData = doc.data();
-        console.log(docData);
-        return {
-          name: docData.name || "",
-          email: docData.email,
-          mobile: docData.mobile || "",
-          address: docData.address || "",
-          dateBirth: docData.dateBirth,
-        } as User;
-      });
+export function Table({ addPatient }: TableProps) {
+  const columns = useColumns();
 
-      setData(usersList);
-    };
+  const { data, error, isLoading, mutate } = useSWR("patients", fetchPatients);
 
-    fetchData();
-  }, []);
+  if (isLoading) return <div>Data loading...</div>;
+  if (error) return <div>An error occurred {error.message}</div>;
 
   const table = useReactTable({
     data,

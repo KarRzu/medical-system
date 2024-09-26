@@ -1,16 +1,17 @@
-
 import { useState } from "react";
 import { Modal } from "../components/shared/Modal";
-import { Table, User } from "../components/shared/Table";
+import { fetchPatients, Table, User } from "../components/shared/Table";
+import useSWR from "swr";
 
 export function PatientsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [newPatient, setNewPatient] = useState<User | null>(null);
+  const { mutate } = useSWR("patients", fetchPatients);
 
   const handleAddPatient = (patient: User) => {
     setNewPatient(patient);
+    mutate();
   };
-
 
   return (
     <>
@@ -23,14 +24,12 @@ export function PatientsPage() {
         >
           Add
         </button>
-
         {modalOpen && (
           <Modal
             closeModal={() => setModalOpen(false)}
             addPatient={handleAddPatient}
           />
         )}
-
       </div>
     </>
   );
