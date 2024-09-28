@@ -22,6 +22,7 @@ export type TableProps = {
   addPatient: (newPatient: User) => void;
 };
 
+// Funkcja fetchPatients do pobierania danych pacjentów
 export const fetchPatients = async () => {
   const patientsCollectionRef = collection(db, "patients");
   const users = await getDocs(patientsCollectionRef);
@@ -40,11 +41,7 @@ export const fetchPatients = async () => {
 
 export function Table({ addPatient }: TableProps) {
   const columns = useColumns();
-
-  const { data, error, isLoading, mutate } = useSWR("patients", fetchPatients);
-
-  if (isLoading) return <div>Data loading...</div>;
-  if (error) return <div>An error occurred {error.message}</div>;
+  const { data, error, isLoading } = useSWR("patients", fetchPatients);
 
   const table = useReactTable({
     data,
@@ -52,38 +49,42 @@ export function Table({ addPatient }: TableProps) {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  if (isLoading) return <div>Data loading...</div>;
+  if (error) return <div>An error occurred {error.message}</div>;
+
+  if (!data || !data.length) {
+    return <div>No patients found.</div>;
+  }
+
   return (
     <>
       <div>
         <table className="w-full border-collapse border border-slate-400">
-          {table.getHeaderGroups().map(
-            (
-              headerGroup // dla kazdej grupy nagłówków generowany jest nowy wiersz tabeli
-            ) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th className="border border-slate-300" key={header.id}>
-                    {flexRender(
-                      //Funkcja która odpowiada za renderowanie dynamicznej zawartości nagłówków
-                      header.column.columnDef.header, //Pierwszy argument to zawartość nagłówka kolumny zdefiniowana w columnDef.header
-                      header.getContext() //przekazuje kontekst dla renderowania (np. dane o kolumnie, ustawienia itp.).
-                    )}
-                  </th>
-                ))}
-                <th className="text-center font-bold">Actions</th>
-              </tr>
-            )
-          )}
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th className="border border-slate-300" key={header.id}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </th>
+              ))}
+              <th className="text-center font-bold">Actions</th>
+            </tr>
+          ))}
 
           <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td className="border border-slate-300 p-4 text-center">
+                  <td
+                    className="border border-slate-300 p-4 text-center"
+                    key={cell.id}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
-
                 <td className="border border-slate-200 p-2 flex justify-center items-center gap-4">
                   <button className="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition duration-300">
                     Delete
