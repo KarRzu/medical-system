@@ -18,11 +18,6 @@ export type User = {
   delete?: ReactNode;
 };
 
-export type TableProps = {
-  addPatient: (newPatient: User) => void;
-};
-
-// Funkcja fetchPatients do pobierania danych pacjentów
 export const fetchPatients = async () => {
   const patientsCollectionRef = collection(db, "patients");
   const users = await getDocs(patientsCollectionRef);
@@ -39,7 +34,7 @@ export const fetchPatients = async () => {
   });
 };
 
-export function Table({ addPatient }: TableProps) {
+export function Table() {
   const columns = useColumns();
   const { data, error, isLoading } = useSWR("patients", fetchPatients);
 
