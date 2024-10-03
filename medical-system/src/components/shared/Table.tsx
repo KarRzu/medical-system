@@ -12,7 +12,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../auth/firebase-config";
-import { useColumns } from "../../auth/hooks/useColumns";
+import { useColumns } from "./columns/useColumns";
 import useSWR from "swr";
 
 export type User = {

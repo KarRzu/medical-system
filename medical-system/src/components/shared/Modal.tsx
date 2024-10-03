@@ -47,8 +47,8 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
 
   return (
     <>
-      <div className="fixed flex justify-center items-center w-full h-screen top-0 left-0 bg-[rgba(0,0,0,0.4)]">
-        <div className="bg-white p-6 w-[30rem] h-[35rem] rounded-md">
+      <fieldset className="fixed flex justify-center items-center w-full h-screen top-0 left-0 bg-[rgba(0,0,0,0.4)]">
+        <fieldset className="bg-white p-6 w-[30rem] h-[35rem] rounded-md">
           <div className="flex justify-between items-center mb-4">
             <p className="text-xl font-bold">Add New Patient</p>
             <button className="text-xl font-bold" onClick={closeModal}>
@@ -137,8 +137,8 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
               Save
             </button>
           </form>
-        </div>
-      </div>
+        </fieldset>
+      </fieldset>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { User } from "../../components/shared/Table";
+import { User } from "../Table";
 
 export const useColumns = (): ColumnDef<User>[] => {
   const columns: ColumnDef<User>[] = [
