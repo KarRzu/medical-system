@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { Modal } from "../components/shared/Modal";
 import { Table, User } from "../components/shared/Table";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../auth/firebase-config";
 import useSWRMutation from "swr/mutation";
 
 export function PatientsPage() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [newPatient, setNewPatient] = useState<User | null>(null);
 
   const { trigger } = useSWRMutation("patients", postPatients);
 
@@ -29,7 +34,7 @@ export function PatientsPage() {
   return (
     <>
       <div className="mt-12">
-        <Table addPatient={newPatient} />
+        <Table />
 
         <button
           className="w-16 bg-custom-blue font-bold text-lg m-12 rounded-lg"
