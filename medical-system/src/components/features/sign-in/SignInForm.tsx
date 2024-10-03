@@ -11,6 +11,7 @@ import { ROUTES } from "../../../router/routes";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 export type FormFields = {
   email: string;
   password: string;
@@ -40,6 +41,7 @@ export function SignInForm() {
     <>
       <ToastContainer />
       <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[570px]">
+
         <div className="flex items-center justify-center py-12">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -71,6 +73,7 @@ export function SignInForm() {
             <div className="mt-4 text-center text-sm">
               <p>
                 Don't have an account? <Link to={ROUTES.signUp}>Sign Up</Link>
+
               </p>
             </div>
           </form>
