@@ -1,27 +1,27 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../auth/firebase-config";
 import { useColumns } from "./columns/useColumns";
 import useSWR from "swr";
 
 export type User = {
+  id: string;
   name: string;
   email: string;
   mobile: string;
   address: string;
   dateBirth: string;
   delete?: ReactNode;
+};
+
+export type TableProps = {
+  onDelete: (id: string) => void;
+  onEdit: (newPatient: User) => void;
 };
 
 export const fetchPatients = async () => {
@@ -41,21 +41,9 @@ export const fetchPatients = async () => {
   });
 };
 
-const deletePatient = async (patientId: string) => {
-  const patientDocRef = doc(db, "patients", patientId);
-  await deleteDoc(patientDocRef);
-};
-
-const editPatient = async (patientId: string, updateData: Partial<User>) => {
-  const patientDocRef = doc(db, "patients", patientId);
-  await updateDoc(patientDocRef, updateData);
-};
-
-export function Table() {
-  const [editingPatient, setEditingPatient] = useState<User | null>(null); // Przechowywanie pacjenta, którego edytujemy
-  const [formData, setFormData] = useState<Partial<User>>({});
+export function Table({ onDelete, onEdit }: TableProps) {
   const columns = useColumns();
-  const { data, error, isLoading, mutate } = useSWR("patients", fetchPatients);
+  const { data, error, isLoading } = useSWR("patients", fetchPatients);
 
   const table = useReactTable({
     data: data || [],
@@ -69,32 +57,6 @@ export function Table() {
   if (!data || !data.length) {
     return <div>No patients found.</div>;
   }
-
-  const handleDelete = async (id: string) => {
-    await deletePatient(id);
-    mutate();
-  };
-
-  const handleEditPatient = (patient: User) => {
-    setEditingPatient(patient); // Ustawienie pacjenta do edycji
-    setFormData(patient); // Wypełnienie formularza danymi pacjenta
-  };
-
-  const handleSaveEdit = async () => {
-    if (editingPatient && formData) {
-      await editPatient(editingPatient.id, formData); //Zapisane edytowanych danych
-      mutate();
-      setEditingPatient(null);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   return (
     <>
@@ -127,13 +89,13 @@ export function Table() {
                 ))}
                 <td className="border border-slate-200 p-2 flex justify-center items-center gap-4">
                   <button
-                    onClick={() => handleDelete(row.original.id)}
+                    onClick={() => onDelete(row.original.id)}
                     className="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition duration-300"
                   >
                     Delete
                   </button>
                   <button
-                    onClick={() => handleEditPatient(row.original)}
+                    onClick={() => onEdit()}
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
                   >
                     Edit
@@ -144,98 +106,6 @@ export function Table() {
           </tbody>
         </table>
       </div>
-
-      {/* Formularz edycji pacjenta */}
-      {editingPatient && (
-        <div className="mt-4 p-4 border border-gray-300 ">
-          <h2 className="text-lg font-bold mb-4">
-            Edit Patient: {editingPatient.name}
-          </h2>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSaveEdit();
-            }}
-          >
-            <div className="mb-2">
-              <label htmlFor="name" className="block">
-                Name:
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name || ""}
-                onChange={handleInputChange}
-                className="border border-gray-300 p-2 rounded w-full"
-                required
-              />
-            </div>
-            <div className="mb-2">
-              <label htmlFor="email" className="block">
-                Email:
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email || ""}
-                onChange={handleInputChange}
-                className="border border-gray-300 p-2 rounded w-full"
-                required
-              />
-            </div>
-            <div className="mb-2">
-              <label htmlFor="mobile" className="block">
-                Mobile:
-              </label>
-              <input
-                type="text"
-                name="mobile"
-                value={formData.mobile || ""}
-                onChange={handleInputChange}
-                className="border border-gray-300 p-2 rounded w-full"
-              />
-            </div>
-            <div className="mb-2">
-              <label htmlFor="address" className="block">
-                Address:
-              </label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address || ""}
-                onChange={handleInputChange}
-                className="border border-gray-300 p-2 rounded w-full"
-              />
-            </div>
-            <div className="mb-2">
-              <label htmlFor="dateBirth" className="block">
-                Date of Birth:
-              </label>
-              <input
-                type="date"
-                name="dateBirth"
-                value={formData.dateBirth || ""}
-                onChange={handleInputChange}
-                className="border border-gray-300 p-2 rounded w-full"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300"
-            >
-              Save Changes
-            </button>
-            <button
-              type="button"
-              onClick={() => setEditingPatient(null)}
-              className="ml-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-300"
-            >
-              Cancel
-            </button>
-          </form>
-        </div>
-      )}
     </>
   );
 }

@@ -6,7 +6,8 @@ import { Errors } from "./Errors";
 
 export type ModalProps = {
   closeModal: () => void;
-  addPatient: (newPatient: User) => void;
+  addPatient: () => void;
+  editPatient: () => void;
 };
 
 export type InputFields = {
@@ -32,13 +33,14 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
     const newPatient: User = {
       name: `${data.firstName} ${data.lastName}`,
       ...data,
+      id: "",
     };
 
     try {
       const patientsCollectionRef = collection(db, "patients");
       await addDoc(patientsCollectionRef, newPatient);
 
-      addPatient(newPatient);
+      addPatient();
       closeModal();
     } catch (error) {
       console.log(error);
