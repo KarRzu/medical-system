@@ -9,7 +9,7 @@ import { db } from "../auth/firebase-config";
 import useSWRMutation from "swr/mutation";
 import { User } from "../components/shared/Table";
 
-export function usePatients() {
+export function usePatientsActions() {
   async function handleCreatePatient(key: string, { arg }: { arg: User }) {
     try {
       const patientsCollectionRef = collection(db, "patients");
@@ -31,13 +31,7 @@ export function usePatients() {
   async function handleEditPatient(key: string, { arg }: { arg: User }) {
     try {
       const patientDocRef = doc(db, "patients", arg.id);
-      await updateDoc(patientDocRef, {
-        name: arg.name,
-        email: arg.email,
-        mobile: arg.mobile,
-        address: arg.address,
-        dateBirth: arg.dateBirth,
-      });
+      await updateDoc(patientDocRef, arg);
     } catch (error) {
       console.log("Error deleting patient:", error);
     }

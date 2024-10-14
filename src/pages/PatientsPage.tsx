@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Modal } from "../components/shared/Modal";
 import { Table, User } from "../components/shared/Table";
-import { usePatients } from "../hooks/usePatients";
+import { usePatientsActions } from "../hooks/usePatientsActions";
 
 export function PatientsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentPatient, setCurrentPatient] = useState<User | null>(null);
 
-  const { createPatient, deletePatient, editPatient } = usePatients();
+  const { createPatient, deletePatient, editPatient } = usePatientsActions();
 
   return (
     <>
