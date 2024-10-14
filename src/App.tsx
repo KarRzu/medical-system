@@ -25,7 +25,6 @@ function App() {
               <Route path={ROUTES.signIn} element={<SignInForm />} />
               <Route path={ROUTES.signUp} element={<SignUpForm />} />
               <Route element={<Layout />}>
-                Layout jako kontener
                 <Route index element={<DashboardPage />} />
                 <Route path={ROUTES.patients} element={<PatientsPage />} />
                 <Route path={ROUTES.doctors} element={<DoctorsPage />} />

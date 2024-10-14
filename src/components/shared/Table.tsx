@@ -4,10 +4,10 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../auth/firebase-config";
 import { useColumns } from "./columns/useColumns";
 import useSWR from "swr";
+import { fetchPatients } from "../services/patientService";
+import { usePatientsActions } from "../../hooks/usePatientsActions";
 
 export type User = {
   id: string;
@@ -24,26 +24,15 @@ export type TableProps = {
   onEdit: (newPatient: User) => void;
 };
 
-export const fetchPatients = async () => {
-  const patientsCollectionRef = collection(db, "patients");
-  const users = await getDocs(patientsCollectionRef);
-
-  return users.docs.map((doc) => {
-    const docData = doc.data();
-    return {
-      id: doc.id,
-      name: docData.name || "",
-      email: docData.email,
-      mobile: docData.mobile || "",
-      address: docData.address || "",
-      dateBirth: docData.dateBirth,
-    } as User;
-  });
-};
-
-export function Table({ onDelete, onEdit }: TableProps) {
+export function Table({ onEdit }: TableProps) {
   const columns = useColumns();
   const { data, error, isLoading } = useSWR("patients", fetchPatients);
+
+  const { deletePatient } = usePatientsActions();
+
+  const handleDelete = (id: string) => async () => {
+    await deletePatient(id);
+  };
 
   const table = useReactTable({
     data: data || [],
@@ -89,7 +78,7 @@ export function Table({ onDelete, onEdit }: TableProps) {
                 ))}
                 <td className="border border-slate-200 p-2 flex justify-center items-center gap-4">
                   <button
-                    onClick={() => onDelete(row.original.id)}
+                    onClick={handleDelete(row.original.id)}
                     className="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition duration-300"
                   >
                     Delete

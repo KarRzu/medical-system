@@ -9,18 +9,26 @@ export function PatientsPage() {
 
   const { createPatient, deletePatient, editPatient } = usePatientsActions();
 
+  const handleDelete = (id: string) => async () => {
+    await deletePatient(id);
+  };
+
+  const handleEditPatient = async (patient: User) => {
+    setCurrentPatient(patient);
+    setModalOpen(true);
+  };
+
+  const handleAddPatient = async () => {
+    await createPatient();
+    setModalOpen(false);
+  };
+
+  const handleCloseModal = () => setModalOpen(false);
+
   return (
     <>
       <div className="mt-12">
-        <Table
-          onDelete={async (id: string) => {
-            await deletePatient(id);
-          }}
-          onEdit={async (patient: User) => {
-            setCurrentPatient(patient);
-            setModalOpen(true);
-          }}
-        />
+        <Table onDelete={handleDelete} onEdit={handleEditPatient} />
 
         <button
           className="w-16 bg-custom-blue font-bold text-lg m-12 rounded-lg"
@@ -30,14 +38,9 @@ export function PatientsPage() {
         </button>
         {modalOpen && (
           <Modal
-            closeModal={() => setModalOpen(false)}
-            addPatient={async () => {
-              await createPatient();
-              setModalOpen(false);
-            }}
-            editPatient={(patient: User) => {
-              setCurrentPatient(patient);
-            }}
+            closeModal={handleCloseModal}
+            addPatient={handleAddPatient}
+            editPatient={handleEditPatient}
           />
         )}
       </div>
