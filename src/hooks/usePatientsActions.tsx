@@ -33,7 +33,7 @@ export function usePatientsActions() {
       const patientDocRef = doc(db, "patients", arg.id);
       await updateDoc(patientDocRef, arg);
     } catch (error) {
-      console.log("Error deleting patient:", error);
+      console.log("Error editing patient:", error);
     }
   }
 

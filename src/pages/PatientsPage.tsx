@@ -7,7 +7,7 @@ export function PatientsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentPatient, setCurrentPatient] = useState<User | null>(null);
 
-  const { createPatient, deletePatient, editPatient } = usePatientsActions();
+  const { deletePatient } = usePatientsActions();
 
   const handleDelete = (id: string) => async () => {
     await deletePatient(id);
@@ -19,11 +19,14 @@ export function PatientsPage() {
   };
 
   const handleAddPatient = async () => {
-    await createPatient();
-    setModalOpen(false);
+    setCurrentPatient(null);
+    setModalOpen(true);
   };
 
-  const handleCloseModal = () => setModalOpen(false);
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setCurrentPatient(null);
+  };
 
   return (
     <>
@@ -40,7 +43,7 @@ export function PatientsPage() {
           <Modal
             closeModal={handleCloseModal}
             addPatient={handleAddPatient}
-            editPatient={handleEditPatient}
+            currentPatient={currentPatient}
           />
         )}
       </div>

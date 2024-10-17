@@ -1,13 +1,13 @@
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../auth/firebase-config";
 import { User } from "./Table";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Errors } from "./Errors";
+import { useEffect } from "react";
+import { usePatientsActions } from "../../hooks/usePatientsActions";
 
 export type ModalProps = {
   closeModal: () => void;
   addPatient: () => void;
-  editPatient: () => void;
+  currentPatient?: User | null;
 };
 
 export type InputFields = {
@@ -20,26 +20,56 @@ export type InputFields = {
   address: string;
 };
 
-export function Modal({ closeModal, addPatient }: ModalProps) {
+export function Modal({ closeModal, addPatient, currentPatient }: ModalProps) {
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm<InputFields>({
     // resolver: yupResolver(RegistrationSchema),
   });
 
+  const { createPatient, editPatient } = usePatientsActions();
+
+  useEffect(() => {
+    if (currentPatient) {
+      const [firstName = "", lastName = ""] = currentPatient.name.split(" ");
+      setValue("firstName", firstName);
+      setValue("lastName", lastName);
+      setValue("idNumber", currentPatient.id || "");
+      setValue("dateBirth", currentPatient.dateBirth || "");
+      setValue("mobile", currentPatient.mobile || "");
+      setValue("email", currentPatient.email || "");
+      setValue("address", currentPatient.address || "");
+    } else {
+      reset();
+      reset({
+        firstName: "",
+        lastName: "",
+        idNumber: "",
+        dateBirth: "",
+        mobile: "",
+        email: "",
+        address: "",
+      });
+    }
+  }, [currentPatient, setValue, reset]);
+
   const onSubmit: SubmitHandler<InputFields> = async (data) => {
     const newPatient: User = {
       name: `${data.firstName} ${data.lastName}`,
       ...data,
-      id: "",
+      id: currentPatient?.id || "",
     };
 
     try {
-      const patientsCollectionRef = collection(db, "patients");
-      await addDoc(patientsCollectionRef, newPatient);
-
+      if (currentPatient) {
+        await editPatient(newPatient);
+      } else {
+        await createPatient(newPatient);
+      }
       addPatient();
       closeModal();
     } catch (error) {
@@ -52,7 +82,9 @@ export function Modal({ closeModal, addPatient }: ModalProps) {
       <fieldset className="fixed flex justify-center items-center w-full h-screen top-0 left-0 bg-[rgba(0,0,0,0.4)]">
         <fieldset className="bg-white p-6 w-[30rem] h-[35rem] rounded-md">
           <div className="flex justify-between items-center mb-4">
-            <p className="text-xl font-bold">Add New Patient</p>
+            <p className="text-xl font-bold">
+              {currentPatient ? "Edit Patient" : "Add New Patient"}
+            </p>
             <button className="text-xl font-bold" onClick={closeModal}>
               x
             </button>
