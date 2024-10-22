@@ -10,7 +10,7 @@ import { fetchPatients } from "../services/patientService";
 import { usePatientsActions } from "../../hooks/usePatientsActions";
 
 export type User = {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   mobile: string;

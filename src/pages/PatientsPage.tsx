@@ -5,7 +5,7 @@ import { usePatientsActions } from "../hooks/usePatientsActions";
 
 export function PatientsPage() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentPatient, setCurrentPatient] = useState<User | null>(null);
+  const [patientData, setPatientData] = useState<User | null>(null);
 
   const { deletePatient } = usePatientsActions();
 
@@ -14,18 +14,18 @@ export function PatientsPage() {
   };
 
   const handleEditPatient = async (patient: User) => {
-    setCurrentPatient(patient);
+    setPatientData(patient);
     setModalOpen(true);
   };
 
   const handleAddPatient = async () => {
-    setCurrentPatient(null);
+    setPatientData(null);
     setModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
-    setCurrentPatient(null);
+    setPatientData(null);
   };
 
   return (
@@ -35,15 +35,15 @@ export function PatientsPage() {
 
         <button
           className="w-16 bg-custom-blue font-bold text-lg m-12 rounded-lg"
-          onClick={() => setModalOpen(true)}
+          onClick={handleAddPatient}
         >
           Add
         </button>
         {modalOpen && (
           <Modal
             closeModal={handleCloseModal}
-            addPatient={handleAddPatient}
-            currentPatient={currentPatient}
+            isEditMode={!!patientData}
+            patientData={patientData}
           />
         )}
       </div>
