@@ -3,9 +3,10 @@ export type InputProps = {
   type?: string;
   placeholder?: string;
   value?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   disabled?: boolean;
+  list?: string;
 };
 
 export function Input({
