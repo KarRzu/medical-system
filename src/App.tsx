@@ -29,7 +29,7 @@ function App() {
                 <Route index element={<DashboardPage />} />
                 <Route path={ROUTES.patients} element={<PatientsPage />} />
                 <Route path={ROUTES.doctors} element={<DoctorsPage />} />
-                <Route path="/doctor/:id" element={<DoctorDetail />} />
+                <Route path="/doctor/:docId" element={<DoctorDetail />} />
                 <Route
                   path={ROUTES.laboratorist}
                   element={<LaboratoristPage />}

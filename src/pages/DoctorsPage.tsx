@@ -7,12 +7,12 @@ export function DoctorsPage() {
   const [selectedSpeciality, setSelectedSpeciality] = useState(null);
 
   const applyFilter = () => {
-    if (selectedSpeciality) {
+    if (selectedSpeciality === "All Doctors" || !selectedSpeciality) {
+      setFilterDoc(doctors);
+    } else {
       setFilterDoc(
         doctors.filter((doc) => doc.speciality === selectedSpeciality)
       );
-    } else {
-      setFilterDoc(doctors);
     }
   };
 

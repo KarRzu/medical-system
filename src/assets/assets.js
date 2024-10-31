@@ -9,12 +9,17 @@ import doc8 from "./doc8.png.png";
 import doc9 from "./doc9.png.png";
 
 export const specialityData = [
+  { speciality: "All Doctors" },
   { speciality: "General physician" },
   { speciality: "Gynecologist" },
   { speciality: "Dermatologist" },
   { speciality: "Gastroenterologist" },
   { speciality: "Neurologist" },
-  { speciality: "Cardiology" },
+  { speciality: "Cardiologist" },
+  { speciality: "Orthopaedist" },
+  { speciality: "Physiotherapist" },
+  { speciality: "Internist" },
+  { speciality: "Ophthalmologist" },
 ];
 
 export const doctors = [
