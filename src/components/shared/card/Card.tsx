@@ -18,18 +18,19 @@ export function Card({ titleName, description, imgSrc, id }: CardProps) {
   return (
     <div
       onClick={handleClick}
-      className="bg-slate-100 w-48 h-72 rounded-2xl flex justify-center items-center m-8 cursor-pointer shadow-lg border border-gray-300 hover:shadow-xl transition-shadow duration-300"
+      className="bg-white w-52 h-80 rounded-xl flex flex-col items-center p-4 cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200"
     >
-      <div className="flex flex-col items-start bg-slate-100">
-        <img src={imgSrc} alt="img doctor" className="w-28" />
-        <div className="flex items-center mt-4">
-          <BsDot className="text-green-400 " />
-          <p className="text-green-400 ml-1">Avaliable</p>
-        </div>
+      <img src={imgSrc} alt="Doctor" className="w-28" />
 
-        <h1 className="font-bold ">{titleName}</h1>
-        <h2 className="text-gray-400 text-sm">{description}</h2>
+      <div className="flex items-center mb-2">
+        <BsDot className="text-green-500" />
+        <span className="text-green-500 text-sm font-medium">Available</span>
       </div>
+
+      <h1 className="text-lg font-semibold text-gray-800 mb-1 text-center">
+        {titleName}
+      </h1>
+      <h2 className="text-sm text-gray-500 text-center">{description}</h2>
     </div>
   );
 }
