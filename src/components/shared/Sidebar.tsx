@@ -4,7 +4,7 @@ import { SIDEBAR_LINKS } from "../features/constans/sidebarLinks";
 export function Sidebar() {
   return (
     <>
-      <div className=" bg-custom-viollet w-1/6 h-screen">
+      <div className=" bg-custom-viollet w-52 h-screen fixed  ">
         <ul className="mt-24">
           {SIDEBAR_LINKS.map((link) => {
             return (

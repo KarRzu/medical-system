@@ -14,6 +14,7 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Providers } from "./auth/Providers";
+import { DoctorDetail } from "./pages/DoctorDetail";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route index element={<DashboardPage />} />
                 <Route path={ROUTES.patients} element={<PatientsPage />} />
                 <Route path={ROUTES.doctors} element={<DoctorsPage />} />
+                <Route path="/doctor/:id" element={<DoctorDetail />} />
                 <Route
                   path={ROUTES.laboratorist}
                   element={<LaboratoristPage />}

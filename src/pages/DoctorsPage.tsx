@@ -1,82 +1,53 @@
-import { Button } from "../components/shared/button/Button";
 import { Card } from "../components/shared/card/Card";
-import { Input } from "../components/shared/input/Input";
+import { doctors, specialityData } from "../assets/assets";
+import { useEffect, useState } from "react";
 
 export function DoctorsPage() {
+  const [filterDoc, setFilterDoc] = useState(doctors);
+  const [selectedSpeciality, setSelectedSpeciality] = useState(null);
+
+  const applyFilter = () => {
+    if (selectedSpeciality) {
+      setFilterDoc(
+        doctors.filter((doc) => doc.speciality === selectedSpeciality)
+      );
+    } else {
+      setFilterDoc(doctors);
+    }
+  };
+
+  useEffect(() => {
+    applyFilter();
+  }, [selectedSpeciality]);
+
   return (
     <>
-      <div className="flex gap-2 mt-4">
-        <Input
-          list="specialization-options"
-          placeholder="Specialization or Examination"
-        />
-        <datalist id="specialization-options">
-          <option value="Cardiology" />
-          <option value="Dermatology" />
-          <option value="Neurology" />
-          <option value="Pediatrics" />
-          <option value="Psychiatry" />
-          <option value="Radiology" />
-          <option value="Surgery" />
-        </datalist>
+      <div className="flex gap-8 p-4 max-w-screen-lg mx-auto">
+        <div className="flex flex-col gap-2 w-1/4">
+          {specialityData.map((doc, index) => (
+            <p
+              className={`px-3 py-2 border cursor-pointer border-gray-300 rounded-md text-sm shadow-sm hover:bg-gray-100 transition-all duration-300 ${
+                selectedSpeciality === doc.speciality ? "bg-gray-200" : ""
+              }`}
+              onClick={() => setSelectedSpeciality(doc.speciality)}
+              key={index}
+            >
+              {doc.speciality}
+            </p>
+          ))}
+        </div>
 
-        <Input list="city-options" placeholder="City" />
-        <datalist id="city-options">
-          <option value="Warsaw" />
-          <option value="Krakow" />
-          <option value="Lodz" />
-          <option value="Wroclaw" />
-          <option value="Poznan" />
-          <option value="Gdansk" />
-          <option value="Szczecin" />
-          <option value="Bydgoszcz" />
-          <option value="Lublin" />
-          <option value="Bialystok" />
-        </datalist>
-        <Button>Search</Button>
-      </div>
-
-      <div className="grid grid-cols-4 grid-rows-4">
-        <Card
-          titleName="Dr. Emily Lorens"
-          description="Neurology"
-          imgSrc="/src/assets/doctor-holding-clipboard-looking-camera.png"
-        />
-        <Card
-          titleName="Dr. Richard James"
-          description="Neurology"
-          imgSrc="/src/assets/front-view-doctor-holding-stethoscope.png"
-        />
-        <Card
-          titleName="Dr. Sarah Patel"
-          description="Neurology"
-          imgSrc="/src/assets/family-doctor-doctor-s-office.png"
-        />
-        <Card
-          titleName="Dr. Christopher Lee"
-          description="Neurology"
-          imgSrc="/src/assets/doctor-holding-clipboard-looking-camera.png"
-        />
-        <Card
-          titleName="Dr. Ava Mitchell"
-          description="Neurology"
-          imgSrc="/src/assets/doctor-holding-clipboard-looking-camera.png"
-        />
-        <Card
-          titleName="Dr. Amelia Hill"
-          description="Neurology"
-          imgSrc="/src/assets/doctor-holding-clipboard-looking-camera.png"
-        />
-        <Card
-          titleName="Dr. Chloe Evans"
-          description="Neurology"
-          imgSrc="/src/assets/doctor-holding-clipboard-looking-camera.png"
-        />
-        <Card
-          titleName="Dr. Ryan Martinez"
-          description="Neurology"
-          imgSrc="/src/assets/doctor-holding-clipboard-looking-camera.png"
-        />
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 w-3/4">
+          {filterDoc.map((doc) => (
+            <Card
+              key={doc.id}
+              id={doc.id}
+              titleName={doc.name}
+              description={doc.speciality}
+              imgSrc={doc.image}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
