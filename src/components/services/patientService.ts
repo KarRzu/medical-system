@@ -18,3 +18,24 @@ export const fetchPatients = async () => {
     } as User;
   });
 };
+
+export const fetchDoctors = async () => {
+  const doctorsCollectionRef = collection(db, "doctors");
+  const doctors = await getDocs(doctorsCollectionRef);
+
+  return doctors.docs.map((doc) => {
+    const docData = doc.data();
+    return {
+      id: doc.id,
+      name: docData.name || "",
+      speciality: docData.speciality || "",
+      email: docData.email,
+      degree: docData.degree || "",
+      address1: docData.address1 || "",
+      address2: docData.address2 || "",
+      experience: docData.experience || "",
+      fees: docData.fees || "",
+      about: docData.about || "",
+    };
+  });
+};

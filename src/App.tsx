@@ -15,6 +15,7 @@ import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Providers } from "./auth/Providers";
 import { DoctorDetail } from "./pages/DoctorDetail";
+import { ModalDoctorPage } from "./pages/ModalDoctorPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path={ROUTES.patients} element={<PatientsPage />} />
                 <Route path={ROUTES.doctors} element={<DoctorsPage />} />
                 <Route path="/doctor/:docId" element={<DoctorDetail />} />
+                <Route path={ROUTES.doctor} element={<ModalDoctorPage />} />
                 <Route
                   path={ROUTES.laboratorist}
                   element={<LaboratoristPage />}

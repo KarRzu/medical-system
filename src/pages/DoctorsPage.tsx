@@ -1,17 +1,33 @@
 import { Card } from "../components/shared/card/Card";
-import { doctors, specialityData } from "../assets/assets";
+import { specialityData } from "../assets/assets";
 import { useEffect, useState } from "react";
 import { Button } from "../components/shared/button/Button";
-import { Modal } from "../components/shared/Modal";
+import { useNavigate } from "react-router-dom";
+import { fetchDoctors } from "../components/services/patientService";
 
 export function DoctorsPage() {
-  const [filterDoc, setFilterDoc] = useState(doctors);
+  const [doctors, setDoctors] = useState([]);
+  const [filterDoc, setFilterDoc] = useState([]); //Przechowujemy listę pobranych lekarzy
   const [selectedSpeciality, setSelectedSpeciality] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadDoctors = async () => {
+      const doctors = await fetchDoctors();
+      setDoctors(doctors);
+      setFilterDoc(doctors);
+    };
+
+    loadDoctors();
+  }, []); //useeffect wykonuje sie raz po załadowaniu komponentu
+
+  //specjalizacja wybór
 
   const applyFilter = () => {
     if (selectedSpeciality === "All Doctors" || !selectedSpeciality) {
-      setFilterDoc(doctors);
+      //i zadna nie wybrana specjalizacja
+      setFilterDoc(doctors); // Jeśli "Wszyscy lekarze", nie filtrujemy
     } else {
       setFilterDoc(
         doctors.filter((doc) => doc.speciality === selectedSpeciality)
@@ -20,14 +36,13 @@ export function DoctorsPage() {
   };
 
   useEffect(() => {
-    applyFilter();
-  }, [selectedSpeciality]);
+    applyFilter(); // Wywołuje filtr za każdym razem, gdy zmieni się `selectedSpeciality`
+  }, [selectedSpeciality, doctors]); // Uruchamia się, gdy `selectedSpeciality` zostanie zaktualizowane
 
   return (
     <>
       <div className="flex gap-8 p-4 max-w-screen-lg mx-auto">
         <div className="flex flex-col gap-2 w-1/4">
-          {/* <button>Add Doctor</button> */}
           {specialityData.map((doc, index) => (
             <p
               className={`px-3 py-2 border cursor-pointer border-gray-300 rounded-md text-sm shadow-sm hover:bg-gray-100 transition-all duration-300 ${
@@ -55,14 +70,12 @@ export function DoctorsPage() {
         <div className="fixed bottom-8 right-8">
           <Button
             className="bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600"
-            onClick={() => setModalOpen(true)}
+            onClick={() => navigate("/add-doctor")}
           >
             + Add Doctor
           </Button>
         </div>
       </div>
-
-      {modalOpen && <Modal closeModal={() => setModalOpen(false)} />}
     </>
   );
 }

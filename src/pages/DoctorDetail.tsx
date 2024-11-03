@@ -1,20 +1,20 @@
 import { useParams } from "react-router-dom";
-import { doctors } from "../assets/assets";
 import { useEffect, useState } from "react";
 import { MdVerified } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { fetchDoctors } from "../components/services/patientService";
 
 export function DoctorDetail() {
   const { docId } = useParams();
   const [docInfo, setDocInfo] = useState(null);
 
-  const fetchDocInfo = async () => {
-    const docInfo = doctors.find((doc) => doc.id === docId);
-    setDocInfo(docInfo);
-  };
-
   useEffect(() => {
-    fetchDocInfo();
+    const loadDoctor = async () => {
+      const allDoctors = await fetchDoctors();
+      const doctor = allDoctors.find((doc) => doc.id === docId);
+      setDocInfo(doctor || null);
+    };
+    loadDoctor();
   }, [docId]);
 
   return (

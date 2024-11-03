@@ -8,6 +8,7 @@ import {
 import { db } from "../auth/firebase-config";
 import useSWRMutation from "swr/mutation";
 import { User } from "../components/shared/Table";
+import { Doctor } from "../pages/ModalDoctorPage";
 
 export function usePatientsActions() {
   async function handleCreatePatient(key: string, { arg }: { arg: User }) {
@@ -37,13 +38,24 @@ export function usePatientsActions() {
     }
   }
 
+  async function handleCreateDoctor(key: string, { arg }: { arg: Doctor }) {
+    try {
+      const doctorRef = collection(db, "doctors");
+      await addDoc(doctorRef, arg);
+    } catch (error) {
+      console.log("Error adding doctors:", error);
+    }
+  }
+
   const createPatient = useSWRMutation("patients", handleCreatePatient);
   const deletePatient = useSWRMutation("patients", handleDeletePatient);
   const editPatient = useSWRMutation("patients", handleEditPatient);
+  const createDoctor = useSWRMutation("doctors", handleCreateDoctor);
 
   return {
     createPatient: createPatient.trigger,
     deletePatient: deletePatient.trigger,
     editPatient: editPatient.trigger,
+    createDoctor: createDoctor.trigger,
   };
 }
