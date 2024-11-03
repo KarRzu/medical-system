@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { specialityImages } from "../assets/assets";
 import { MdVerified } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { fetchDoctors } from "../components/services/patientService";
@@ -22,7 +23,11 @@ export function DoctorDetail() {
       {docInfo ? (
         <div className="flex gap-8 p-8 max-w-screen-lg mx-auto">
           <div className="flex flex-col items-center w-1/4 bg-gray-100 rounded-lg shadow-md p-6">
-            <img src={docInfo.image} alt="doctor" className="w-40" />
+            <img
+              src={specialityImages[docInfo.speciality]}
+              alt="doctor"
+              className="w-40"
+            />
           </div>
 
           <div className="w-3/4 p-6 rounded-lg shadow-md bg-white">

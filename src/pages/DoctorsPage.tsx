@@ -1,5 +1,5 @@
 import { Card } from "../components/shared/card/Card";
-import { specialityData } from "../assets/assets";
+import { specialityData, specialityImages } from "../assets/assets";
 import { useEffect, useState } from "react";
 import { Button } from "../components/shared/button/Button";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +63,7 @@ export function DoctorsPage() {
               id={doc.id}
               titleName={doc.name}
               description={doc.speciality}
-              imgSrc={doc.image}
+              imgSrc={specialityImages[doc.speciality]}
             />
           ))}
         </div>

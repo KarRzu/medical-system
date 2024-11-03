@@ -26,7 +26,7 @@ export type Doctor = {
   experience: string;
   fees: string;
   about: string;
-  image?: FileList;
+  imageUrl?: string;
 };
 
 export function ModalDoctorPage() {
@@ -40,9 +40,15 @@ export function ModalDoctorPage() {
   } = useForm<InputFields>();
 
   const onSubmit: SubmitHandler<InputFields> = async (data) => {
+    console.log("Data submitted:", data);
     const newDoctor: Doctor = {
       ...data,
+      imageUrl: data.image?.length
+        ? URL.createObjectURL(data.image[0])
+        : undefined,
     };
+
+    console.log(newDoctor);
 
     try {
       await createDoctor(newDoctor);

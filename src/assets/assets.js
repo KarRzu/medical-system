@@ -20,3 +20,14 @@ export const specialityData = [
   { speciality: "Internist" },
   { speciality: "Ophthalmologist" },
 ];
+
+export const specialityImages = {
+  "General physician": doc1,
+  Gynecologist: doc2,
+  Dermatologist: doc3,
+  Gastroenterologist: doc4,
+  Neurologist: doc5,
+  Cardiologist: doc6,
+  Orthopaedist: doc7,
+  Physiotherapist: doc8,
+};
