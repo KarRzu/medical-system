@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { specialityImages } from "../assets/assets";
 import { MdVerified } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { fetchDoctors } from "../components/services/patientService";
+import { specialityImages } from "../assets/assets";
 
 export function DoctorDetail() {
   const { docId } = useParams();

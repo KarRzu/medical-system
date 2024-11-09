@@ -71,9 +71,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
           <button
             className="text-gray-400 hover:text-gray-600 transition duration-200"
             onClick={closeModal}
-          >
-            &#x2715;
-          </button>
+          ></button>
         </div>
 
         <form

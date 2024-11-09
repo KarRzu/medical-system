@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { SIDEBAR_LINKS } from "../features/constans/sidebarLinks";
+import clsx from "clsx";
 
 export function Sidebar() {
   const location = useLocation();
@@ -15,11 +16,12 @@ export function Sidebar() {
           <li key={link.path}>
             <Link
               to={link.path}
-              className={`flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+              className={clsx(
+                "flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300",
                 location.pathname === link.path
                   ? "bg-violet-700 text-white"
                   : "text-indigo-200 hover:bg-violet-300 hover:text-indigo-900"
-              }`}
+              )}
             >
               {link.icon && <link.icon className="w-5 h-5 mr-3" />}
               <span className="hidden md:inline">{link.name}</span>
