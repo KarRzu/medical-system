@@ -12,4 +12,5 @@ export const ROUTES = {
   notFound: "/404",
   settings: "/settings",
   doctor: "add-doctor",
+  doctorDetail: "/doctor/:doctorId",
 };

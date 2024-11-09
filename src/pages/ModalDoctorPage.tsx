@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "../components/shared/input/Input";
 import { usePatientsActions } from "../hooks/usePatientsActions";
 import { useNavigate } from "react-router-dom";
+import { Errors } from "../components/shared/Errors";
 
 export type InputFields = {
   name: string;
@@ -41,6 +42,7 @@ export function ModalDoctorPage() {
 
   const onSubmit: SubmitHandler<InputFields> = async (data) => {
     console.log("Data submitted:", data);
+
     const newDoctor: Doctor = {
       ...data,
       imageUrl: data.image?.length
@@ -72,34 +74,41 @@ export function ModalDoctorPage() {
           <div>
             <label className="block text-gray-600 mb-1">Doctor Name</label>
             <Input placeholder="Name" {...register("name")} />
+            <Errors message={errors.name?.message} />
           </div>
           <div>
             <label className="block text-gray-600 mb-1">Speciality</label>
             <Input placeholder="Speciality" {...register("speciality")} />
+            <Errors message={errors.speciality?.message} />
           </div>
           <div>
             <label className="block text-gray-600 mb-1">Doctor Email</label>
             <Input type="email" placeholder="Email" {...register("email")} />
+            <Errors message={errors.email?.message} />
           </div>
           <div>
             <label className="block text-gray-600 mb-1">Degree</label>
             <Input placeholder="Degree" {...register("degree")} />
+            <Errors message={errors.degree?.message} />
           </div>
 
           <div>
             <div>
               <label className="block text-gray-600 mb-1">Address</label>
               <Input placeholder="Address" {...register("address1")} />
+              <Errors message={errors.address1?.message} />
             </div>
             <div>
               <label className="block text-gray-600 mb-1">Address 1</label>
               <Input placeholder="Address" {...register("address2")} />
+              <Errors message={errors.address2?.message} />
             </div>
           </div>
 
           <div>
             <label className="block text-gray-600 mb-1">Image</label>
             <Input placeholder="Image" type="file" {...register("image")} />
+            <Errors message={errors.image?.message} />
           </div>
 
           <div>
@@ -111,10 +120,12 @@ export function ModalDoctorPage() {
               placeholder="Years of experience"
               {...register("experience")}
             />
+            <Errors message={errors.experience?.message} />
           </div>
           <div>
             <label className="block text-gray-600 mb-1">Fees</label>
             <Input placeholder="Fees" {...register("fees")} />
+            <Errors message={errors.fees?.message} />
           </div>
           <div className="col-span-2">
             <label className="block text-gray-600 mb-1">About</label>
@@ -123,6 +134,7 @@ export function ModalDoctorPage() {
               className="w-full"
               {...register("about")}
             />
+            <Errors message={errors.about?.message} />
           </div>
         </div>
 

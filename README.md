@@ -1,50 +1,37 @@
-# React + TypeScript + Vite
+# MediCare - A Medical Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MediCare is a simple medical management system that allows users to manage doctors and patients seamlessly. It is built using:
 
-Currently, two official plugins are available:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Firebase (for backend and data storage)
+- useSWR (data fetching)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👾 **Features**
 
-## Expanding the ESLint configuration
+- Add, edit, and delete doctor profiles.
+- View a list of doctors with specializations.
+- Drag and drop functionality for selecting doctors.
+- User-friendly forms for inputting doctor and patient information.
+- All data is saved in Firebase, allowing persistent storage.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+📒 **Process**
+I started by implementing user authentication with login and registration features. Next, I developed a patient table using `useSWR`, allowing users to easily add, edit, and delete patient records.
 
-- Configure the top-level `parserOptions` property like this:
+After the patient management feature, I focused on implementing the Doctors tab, where users can also add, edit, and delete doctor profiles. This tab mirrors the functionality of the patient table, providing a consistent user experience throughout the application.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+I styled the application using Tailwind CSS, ensuring a modern and responsive design, drawing inspiration from popular medical management systems and best practices in UI/UX design.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The project includes user feedback mechanisms and data validation to enhance user experience. All data is stored in Firebase, ensuring that users can come back to their information at any time.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+**NOTE:** The project's primary purpose is to demonstrate a basic medical management system and showcase the use of React and Firebase. It is not intended to be a full-fledged medical application.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+🚦 **Running the Project**
+To run the project in your local environment, follow these steps:
+
+1. Clone the repository to your local machine.
+2. Run `npm install` or `yarn` in the project directory to install the required dependencies.
+3. Run `npm run start` or `yarn start` to get the project started.
+4. Open `http://localhost:5173` (or the address shown in your console) in your web browser to view the app.
