@@ -1,9 +1,9 @@
 import { Card } from "../components/shared/card/Card";
-import { specialityData, specialityImages } from "../assets/assets";
 import { useEffect, useState } from "react";
 import { Button } from "../components/shared/button/Button";
 import { useNavigate } from "react-router-dom";
 import { fetchDoctors } from "../components/services/patientService";
+import { specialityData, specialityImages } from "../assets/assets";
 
 export function DoctorsPage() {
   const [doctors, setDoctors] = useState([]);
