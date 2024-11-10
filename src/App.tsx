@@ -14,7 +14,7 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Providers } from "./auth/Providers";
-import { DoctorDetail } from "./pages/DoctorDetail";
+import { DoctorDetailsFetcher } from "./pages/DoctorDetail";
 import { ModalDoctorPage } from "./pages/ModalDoctorPage";
 
 function App() {
@@ -30,7 +30,10 @@ function App() {
                 <Route index element={<DashboardPage />} />
                 <Route path={ROUTES.patients} element={<PatientsPage />} />
                 <Route path={ROUTES.doctors} element={<DoctorsPage />} />
-                <Route path={ROUTES.doctorDetail} element={<DoctorDetail />} />
+                <Route
+                  path={ROUTES.doctorDetail}
+                  element={<DoctorDetailsFetcher />}
+                />
                 <Route path={ROUTES.doctor} element={<ModalDoctorPage />} />
                 <Route
                   path={ROUTES.laboratorist}

@@ -1,5 +1,6 @@
 import { BsDot } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../router/routes";
 
 export type CardProps = {
   id: string;
@@ -11,13 +12,9 @@ export type CardProps = {
 export function Card({ titleName, description, imgSrc, id }: CardProps) {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/doctor/${id}`);
-  };
-
   return (
-    <div
-      onClick={handleClick}
+    <Link
+      to={`${ROUTES.doctorDetail.replace(":doctorId", id)}`}
       className="bg-white w-52 h-80 rounded-xl flex flex-col items-center p-4 cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200"
     >
       <img src={imgSrc} alt="Doctor" className="w-28" />
@@ -31,6 +28,6 @@ export function Card({ titleName, description, imgSrc, id }: CardProps) {
         {titleName}
       </h1>
       <h2 className="text-sm text-gray-500 text-center">{description}</h2>
-    </div>
+    </Link>
   );
 }

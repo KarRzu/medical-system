@@ -31,7 +31,9 @@ export function Sidebar() {
       </ul>
 
       <div className="flex items-center justify-center py-6 border-t border-violet-600">
-        <p className="text-xs text-indigo-200">&copy; 2024 MediCare</p>
+        <p className="text-xs text-indigo-200">
+          &copy; {new Date().getFullYear()} MediCare
+        </p>
       </div>
     </div>
   );
