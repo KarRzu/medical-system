@@ -4,29 +4,20 @@ import { Button } from "../components/shared/button/Button";
 import { useNavigate } from "react-router-dom";
 import { fetchDoctors } from "../components/services/patientService";
 import { specialityData, specialityImages } from "../assets/assets";
+import useSWR from "swr";
 
 export function DoctorsPage() {
-  const [doctors, setDoctors] = useState([]);
-  const [filterDoc, setFilterDoc] = useState([]); //Przechowujemy listę pobranych lekarzy
+  const [filterDoc, setFilterDoc] = useState([]);
   const [selectedSpeciality, setSelectedSpeciality] = useState(null);
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadDoctors = async () => {
-      const doctors = await fetchDoctors();
-      setDoctors(doctors);
-      setFilterDoc(doctors);
-    };
+  const { data: doctors, error, isLoading } = useSWR("doctors", fetchDoctors);
 
-    loadDoctors();
-  }, []); //useeffect wykonuje sie raz po załadowaniu komponentu
-
-  //specjalizacja wybór
+  if (isLoading) return <div>Loading doctors...</div>;
+  if (error) return <div>Error loading doctors: {error.message}</div>;
 
   const applyFilter = () => {
     if (selectedSpeciality === "All Doctors" || !selectedSpeciality) {
-      //i zadna nie wybrana specjalizacja
       setFilterDoc(doctors); // Jeśli "Wszyscy lekarze", nie filtrujemy
     } else {
       setFilterDoc(
