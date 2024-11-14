@@ -6,6 +6,7 @@ import { fetchDoctors } from "../components/services/patientService";
 import { specialityData, specialityImages } from "../assets/assets";
 import useSWR from "swr";
 import { Doctor } from "./ModalDoctorPage";
+import clsx from "clsx";
 
 export function DoctorsPage() {
   const [filteredDoctor, setfilteredDoctor] = useState<Doctor[]>([]);
@@ -39,9 +40,12 @@ export function DoctorsPage() {
         <div className="flex flex-col gap-2 w-1/4">
           {specialityData.map((doc) => (
             <p
-              className={`px-3 py-2 border cursor-pointer border-gray-300 rounded-md text-sm shadow-sm hover:bg-gray-100 transition-all duration-300 ${
-                selectedSpeciality === doc.speciality ? "bg-gray-200" : ""
-              }`}
+              className={clsx(
+                "px-3 py-2 border cursor-pointer border-gray-300 rounded-md text-sm shadow-sm hover:bg-gray-100 transition-all duration-300",
+                {
+                  "bg-gray-200": selectedSpeciality === doc.speciality,
+                }
+              )}
               onClick={() => setSelectedSpeciality(doc.speciality)}
               key={doc.id}
             >

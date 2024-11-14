@@ -14,8 +14,8 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Providers } from "./auth/Providers";
-import { DoctorDetailsFetcher } from "./pages/DoctorDetail";
 import { ModalDoctorPage } from "./pages/ModalDoctorPage";
+import { DoctorDetailsFetcher } from "./pages/DoctorDetailsFetcher";
 
 function App() {
   return (
