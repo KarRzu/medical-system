@@ -27,7 +27,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && <label className="block mb-1">{label}</label>}
         <input
           ref={ref}
-          className="border-2 rounded-lg w-96 p-2"
+          className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
           type={type}
           placeholder={placeholder}
           required={required}

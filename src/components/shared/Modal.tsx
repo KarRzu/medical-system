@@ -2,6 +2,8 @@ import { User } from "./Table";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Errors } from "./Errors";
 import { usePatientsActions } from "../../hooks/usePatientsActions";
+import { Input } from "./input/Input";
+import { useState } from "react";
 
 export type ModalProps = {
   closeModal: () => void;
@@ -20,6 +22,7 @@ export type InputFields = {
 };
 
 export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { createPatient, editPatient } = usePatientsActions();
 
   const {
@@ -42,6 +45,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
   });
 
   const onSubmit: SubmitHandler<InputFields> = async (data) => {
+    setIsSubmitting(true);
     const newPatient: User = {
       name: `${data.firstName} ${data.lastName}`,
       ...data,
@@ -58,6 +62,8 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
       closeModal();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -71,7 +77,9 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
           <button
             className="text-gray-400 hover:text-gray-600 transition duration-200"
             onClick={closeModal}
-          ></button>
+          >
+            X
+          </button>
         </div>
 
         <form
@@ -82,11 +90,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
             <label htmlFor="firstName" className="text-sm text-gray-600">
               First Name
             </label>
-            <input
-              {...register("firstName")}
-              placeholder="First Name"
-              className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            />
+            <Input {...register("firstName")} placeholder="First Name" />
             <Errors message={errors.firstName?.message} />
           </div>
 
@@ -94,11 +98,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
             <label htmlFor="lastName" className="text-sm text-gray-600">
               Last Name
             </label>
-            <input
-              {...register("lastName")}
-              placeholder="Last Name"
-              className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            />
+            <Input {...register("lastName")} placeholder="Last Name" />
             <Errors message={errors.lastName?.message} />
           </div>
 
@@ -106,11 +106,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
             <label htmlFor="idNumber" className="text-sm text-gray-600">
               ID Number
             </label>
-            <input
-              {...register("idNumber")}
-              placeholder="ID Number"
-              className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            />
+            <Input {...register("idNumber")} placeholder="ID Number" />
             <Errors message={errors.idNumber?.message} />
           </div>
 
@@ -118,11 +114,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
             <label htmlFor="dateBirth" className="text-sm text-gray-600">
               Birth Date
             </label>
-            <input
-              {...register("dateBirth")}
-              placeholder="Date of Birth"
-              className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            />
+            <Input {...register("dateBirth")} placeholder="Date of Birth" />
             <Errors message={errors.dateBirth?.message} />
           </div>
 
@@ -130,11 +122,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
             <label htmlFor="mobile" className="text-sm text-gray-600">
               Mobile
             </label>
-            <input
-              {...register("mobile")}
-              placeholder="Mobile"
-              className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            />
+            <Input {...register("mobile")} placeholder="Mobile" />
             <Errors message={errors.mobile?.message} />
           </div>
 
@@ -142,11 +130,7 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
             <label htmlFor="email" className="text-sm text-gray-600">
               Email
             </label>
-            <input
-              {...register("email")}
-              placeholder="Email"
-              className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            />
+            <Input {...register("email")} placeholder="Email" />
             <Errors message={errors.email?.message} />
           </div>
 
@@ -154,19 +138,16 @@ export function Modal({ closeModal, patientData, isEditMode }: ModalProps) {
             <label htmlFor="address" className="text-sm text-gray-600">
               Address
             </label>
-            <input
-              {...register("address")}
-              placeholder="Address"
-              className="border w-full p-2 mt-1 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-            />
+            <Input {...register("address")} placeholder="Address" />
             <Errors message={errors.address?.message} />
           </div>
 
           <button
             type="submit"
             className="col-span-2 bg-blue-600 text-white font-semibold p-2 mt-4 rounded-md hover:bg-blue-700 transition duration-200"
+            disabled={isSubmitting}
           >
-            Save
+            {isSubmitting ? "Saving..." : "Save"}
           </button>
         </form>
       </fieldset>

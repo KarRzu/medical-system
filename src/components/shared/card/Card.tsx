@@ -1,5 +1,5 @@
 import { BsDot } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ROUTES } from "../../../router/routes";
 
 export type CardProps = {
@@ -10,11 +10,11 @@ export type CardProps = {
 };
 
 export function Card({ titleName, description, imgSrc, id }: CardProps) {
-  const navigate = useNavigate();
+  const detailsURL = ROUTES.doctorDetail.replace(":doctorId", id);
 
   return (
     <Link
-      to={`${ROUTES.doctorDetail.replace(":doctorId", id)}`}
+      to={detailsURL}
       className="bg-white w-52 h-80 rounded-xl flex flex-col items-center p-4 cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-200"
     >
       <img src={imgSrc} alt="Doctor" className="w-28" />
