@@ -7,7 +7,7 @@ export function Layout() {
     <>
       <div className="flex">
         <Sidebar />
-        <div className="w-full">
+        <div className="w-full ml-60">
           <Header />
           <Outlet />
         </div>

@@ -18,3 +18,16 @@ export const fetchPatients = async () => {
     } as User;
   });
 };
+
+export const fetchDoctors = async () => {
+  const doctorsCollectionRef = collection(db, "doctors");
+  const doctors = await getDocs(doctorsCollectionRef);
+
+  return doctors.docs.map((doc) => {
+    const docData = doc.data();
+    return {
+      id: doc.id,
+      ...docData,
+    };
+  });
+};

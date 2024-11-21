@@ -14,6 +14,8 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Providers } from "./auth/Providers";
+import { ModalDoctorPage } from "./pages/ModalDoctorPage";
+import { DoctorDetailsFetcher } from "./pages/DoctorDetailsFetcher";
 
 function App() {
   return (
@@ -28,6 +30,11 @@ function App() {
                 <Route index element={<DashboardPage />} />
                 <Route path={ROUTES.patients} element={<PatientsPage />} />
                 <Route path={ROUTES.doctors} element={<DoctorsPage />} />
+                <Route
+                  path={ROUTES.doctorDetail}
+                  element={<DoctorDetailsFetcher />}
+                />
+                <Route path={ROUTES.doctor} element={<ModalDoctorPage />} />
                 <Route
                   path={ROUTES.laboratorist}
                   element={<LaboratoristPage />}

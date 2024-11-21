@@ -6,6 +6,7 @@ export type ButtonProps = {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "outline" | "inline";
+  ariaLabel?: string;
 };
 
 export function Button({
@@ -14,6 +15,7 @@ export function Button({
   disabled = false,
   type = "button",
   variant = "primary",
+  ariaLabel,
 }: ButtonProps) {
   const variantClass = {
     primary: "bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700",
@@ -29,6 +31,7 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
       type={type}
+      aria-label={ariaLabel}
     >
       {children}
     </button>
