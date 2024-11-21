@@ -66,12 +66,7 @@ export function DoctorsPage() {
           ))}
         </div>
         <div className="fixed bottom-8 right-8">
-          <Button
-            className="bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600"
-            onClick={() => navigate("/add-doctor")}
-          >
-            + Add Doctor
-          </Button>
+          <Button onClick={() => navigate("/add-doctor")}>+ Add Doctor</Button>
         </div>
       </div>
     </>
