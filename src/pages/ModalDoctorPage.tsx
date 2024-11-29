@@ -18,6 +18,7 @@ export type InputFields = {
 };
 
 export type Doctor = {
+  id: Key | null | undefined;
   name: string;
   speciality: string;
   email: string;
